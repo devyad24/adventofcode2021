@@ -1,27 +1,31 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <string>
 
 
 
 
 int main() {
 
-	std::vector<int> depthOfsubmarine;
+	std::vector<std::string> position;
 	std::ifstream file("sample.txt");
-	int input;
+	std::string input;
 	while (file >> input) {
-		depthOfsubmarine.push_back(input);
+		position.push_back(input);
 	}
-	int increaseCount = 0;
-	
-	for (int i = 0; i < depthOfsubmarine.size()-1; i++) {
-		if (depthOfsubmarine.size() == 0) {
-			break;
-		}
-		else if (depthOfsubmarine[i] < depthOfsubmarine[i + 1])
-			increaseCount++;
+	int horizontalPosi = 0;
+	int depth = 0;
+	for (int i = 0; i < position.size() - 1; i++) {
+		if (position[i] == "forward")
+			horizontalPosi = horizontalPosi + stoi(position[i + 1]);
+		else if (position[i] == "down")
+			depth = depth + stoi(position[i + 1]);
+		else if (position[i] == "up")
+			depth = depth - stoi(position[i + 1]);
+
 	}
-	std::cout <<increaseCount<< std::endl;
+	int result = horizontalPosi * depth;
+	std::cout << result << std::endl;
 	return 0;
 }
